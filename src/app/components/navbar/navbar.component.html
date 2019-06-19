@@ -1,6 +1,26 @@
-<mat-toolbar color="primary">
+<!-- <mat-toolbar color="primary">
   <mat-toolbar-row>
     <span>Dev Logger</span>
   </mat-toolbar-row>
   </mat-toolbar>
-  
+  a -->
+
+  <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+    <input name="first" ngModel reauired #first="ngModel">
+    <button>Submit</button>
+  </form>
+
+  <div *ngIf="posts" class="class">
+    <p>Total Results: {{posts.total_count}}</p>
+    <div class="card" *ngFor="let post of posts.items">
+      <div class="card-body">
+        <div class="clearfix">
+          <img src={{post.avatar_url}} style="width:130px; height:115px;" class="float-left rounded pull-left mr-2">
+          <p>{{post.login}}</p>
+          <p>Profile Url : {{post.url}}</p>
+          <p>ID: {{post.id}}</p>
+        </div> 
+        <button type="button" class="btn btn-default float-right">Details:</button>
+     </div>
+    </div>
+  </div>

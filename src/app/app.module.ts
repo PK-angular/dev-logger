@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HttpClientModule } from '@angular/common/http';
 import {UserDataService} from './services/user-data.service';
+import { FormsModule }   from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import {UserDataService} from './services/user-data.service';
   imports: [
     BrowserModule,
     MatToolbarModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [UserDataService],
   bootstrap: [AppComponent]
