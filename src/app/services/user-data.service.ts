@@ -25,6 +25,21 @@ export class UserDataService {
     console.log("API response below:    ");
     let obs = this.http.get('https://api.github.com/search/users?q=tom',this.httpOptions);
      obs.subscribe(users => { console.log(users)});
+     this.http.get<User[]>("https://api.github.com/search/users?q=tom",this.httpOptions).pipe(
+      map(responseData => {
+        const postsArray = [];
+        for (const key in responseData) {
+          if (responseData.hasOwnProperty(key)) {
+            postsArray.push({ ...responseData[key], id: key });
+          }
+        }
+        return postsArray;
+      })
+    )
+    .subscribe(posts => {
+      // ...
+      console.log(posts);
+    });
     return this.http.get<User[]>("https://api.github.com/search/users?q=tom",this.httpOptions);
       
   }
