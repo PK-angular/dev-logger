@@ -1,26 +1,51 @@
-<!-- <mat-toolbar color="primary">
+<mat-toolbar color="primary">
   <mat-toolbar-row>
-    <span>Dev Logger</span>
+    <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+      <input name="first" ngModel reauired #first="ngModel">
+      <button>Submit</button>
+    </form>
   </mat-toolbar-row>
-  </mat-toolbar>
-  a -->
+</mat-toolbar>
 
-  <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
-    <input name="first" ngModel reauired #first="ngModel">
-    <button>Submit</button>
-  </form>
 
-  <div *ngIf="posts" class="class">
-    <p>Total Results: {{posts.total_count}}</p>
-    <div class="card" *ngFor="let post of posts.items">
-      <div class="card-body">
-        <div class="clearfix">
-          <img src={{post.avatar_url}} style="width:130px; height:115px;" class="float-left rounded pull-left mr-2">
-          <p>{{post.login}}</p>
-          <p>Profile Url : {{post.url}}</p>
-          <p>ID: {{post.id}}</p>
-        </div> 
-        <button type="button" class="btn btn-default float-right">Details:</button>
-     </div>
-    </div>
+
+
+<div *ngIf="posts" class="class">
+  <p>Total Results: {{posts.total_count}}</p>
+  <div class="card"
+    *ngFor="let post of posts.items | paginate: { itemsPerPage: 3, currentPage: p, totalItems: posts.total_count}">
+    <mat-card class="card-body">
+      <div class="clearfix">
+        <img src={{post.avatar_url}} style="width:130px; height:115px;" class="float-left rounded pull-left mr-2">
+        <p>{{post.login}}</p>
+        <p>Profile Url : {{post.url}}</p>
+        <p>ID: {{post.id}}</p>
+      </div>
+      <button type="button" class="btn btn-default float-right" (click)="detailsFunction(post.login,post.id)">Details</button>
+      <!-- <div *ngIf="!(detailEnabled && users); else elseBlock"></div> -->
+
+      <div *ngIf="detailEnabled && users && users.owner.login===post.login">
+       <p> Repo Name : {{users.name}}</p>
+       <p>Language: {{users.language}}</p>
+       <p>Fork Counts : {{forks_count}}</p>
+      </div>
+      <ng-template *ngIf="detailEnabled && users ">
+        mornings bro
+          <div class="card">
+            <div class="clearfix">
+              <p>{{users.merges_url}}</p>
+            </div>
+          </div>
+        </ng-template>
+
+    </mat-card>
   </div>
+  <!-- <div class="class" *ngIf="users ">
+    gfdsbfhdsjfsjdfhkjsdfkjshjkfkjffgfgkjshdkjkjsdfhskjdfkjfgdhkjhsdkjhskjdfhskjd
+      {{users.owner.login}}
+    {{loginUser}}
+    </div> -->
+  <pagination-controls (pageChange)="p = $event"></pagination-controls>
+</div>
+
+
